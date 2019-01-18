@@ -13,7 +13,7 @@ namespace DrugTest.Controllers
         /// <summary>
         /// 检查登录是否成功
         /// </summary>
-        /// <param name="phoneNumber"></param>g
+        /// <param name="phoneNumber">手机号作为用户名登录</param>g
         /// <param name="key"></param>
         /// <returns></returns>
         [HttpGet]
