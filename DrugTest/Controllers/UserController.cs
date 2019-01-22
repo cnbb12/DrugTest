@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using Dap;
 
@@ -13,16 +14,29 @@ namespace DrugTest.Controllers
         /// <summary>
         /// 检查登录是否成功
         /// </summary>
-        /// <param name="phoneNumber">手机号作为用户名登录</param>g
-        /// <param name="key"></param>
         /// <returns></returns>
-        [HttpGet]
-        public RESULT CheckLogin(string phoneNumber, string key)
+        [HttpPost]
+        public RESULT CheckLogin()
         {
+                
             RESULT result = new RESULT();
+            List<object> list = new List<object>();
             try
             {
-                result.result = Dap.user.checkLogin(phoneNumber, key);
+                string phoneNumber, key;
+
+                phoneNumber = HttpContext.Current.Request.Headers["phoneNumber"];
+                key = HttpContext.Current.Request.Headers["key"];
+                
+                if (phoneNumber == null && key == null)
+                {
+                    phoneNumber = HttpContext.Current.Request.Form["phoneNumber"];
+                    key = HttpContext.Current.Request.Form["key"];
+                }
+                object ob = Dap.user.checkLogin(phoneNumber, key);
+                list.Add(ob);
+                
+                result.result = list;
             }
             catch (Exception e)
             {

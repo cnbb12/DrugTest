@@ -3,6 +3,7 @@ using WebActivatorEx;
 using DrugTest;
 using Swashbuckle.Application;
 using DrugTest.App_Start;
+using System.Web.Http.Cors;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 

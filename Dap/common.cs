@@ -58,7 +58,7 @@ namespace Dap
     public class RESULT
     {
         public bool state { get; set; }
-        public dynamic result { get; set; }
+        public List<object> result { get; set; }
         public string msg { get; set; }
         public RESULT(string token = "")
         {
