@@ -20,6 +20,7 @@ namespace DrugTest.Controllers
         public RESULT GetDrugsList()
         {
             RESULT result = new RESULT();
+
             try
             {
                 string status;
