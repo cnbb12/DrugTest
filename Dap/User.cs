@@ -16,7 +16,7 @@ namespace Dap
         /// <param name="phoneNumber">用户名就是手机号</param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static Models.User checkLogin(string phoneNumber, string key)
+        public static List<Models.User> checkLogin(string phoneNumber, string key)
         {
             using (DataContext dc = new DataContext(common.conn))
             {
@@ -29,9 +29,9 @@ namespace Dap
                     var user = from x in dc.GetTable<User>()
                                where x.PhoneNumber == phoneNumber && x.Password == key
                                select x;
-                    if (user.Count() == 1)
+                    if (user.Count() >= 1)
                     {
-                        return user.First();
+                        return user.ToList();
                     }
                     else throw (new Exception("用户名或密码错误"));
                 }

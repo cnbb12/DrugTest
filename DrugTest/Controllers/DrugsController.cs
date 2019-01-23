@@ -1,31 +1,34 @@
-﻿using System;
+﻿using Dap;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using Dap;
 
 namespace DrugTest.Controllers
 {
-    public class UserController : ApiController
+    public class DrugsController : ApiController
     {
         /// <summary>
-        /// 检查登录是否成功
+        /// 根据查询的过期状态返回对应的药品列表
         /// </summary>
         /// <returns></returns>
+        
         [HttpPost]
-        public RESULT CheckLogin()
+        public RESULT GetDrugsList()
         {
-                
             RESULT result = new RESULT();
             try
             {
-                string phoneNumber = HttpContext.Current.Request.Form["phoneNumber"];
-                string key = HttpContext.Current.Request.Form["key"];
+                string status;
+                string ownerId;
 
-                result.result = Dap.user.checkLogin(phoneNumber, key);
+                status = HttpContext.Current.Request.Form["status"];
+                ownerId = HttpContext.Current.Request.Form["ownerId"];
+                result.result = Dap.drugs.getDrugsList(status,ownerId);               
+                
             }
             catch (Exception e)
             {

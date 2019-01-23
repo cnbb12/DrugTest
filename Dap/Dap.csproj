@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="common.cs" />
+    <Compile Include="drugs.cs" />
     <Compile Include="user.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
