@@ -46,11 +46,12 @@ namespace Dap
                                      where x.OwnerId.ToString() == ownerId && x.RemainDay > 60
                                      select x;
                     list_drugs = _list_drugs.ToList();
+
                 }
             }
             if(list_drugs != null)
             {
-
+              
                 IOrderedEnumerable<Drugs> query;
 
                 query = list_drugs.OrderBy(c => c.RemainDay);

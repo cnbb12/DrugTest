@@ -20,7 +20,7 @@ namespace Models
         public string Effect { get; set; }
 
         [Column]
-        public DateTime ExpirationDate { get; set; }
+        public string ExpirationDate { get; set; }
 
         [Column]
         public string Instruction { get; set; }
