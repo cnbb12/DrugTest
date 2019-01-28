@@ -4,6 +4,7 @@ using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.Routing;
 using Models;
 
 namespace Dap
@@ -12,12 +13,13 @@ namespace Dap
     {
      
         /// <summary>
-        /// 根据查询的过期状态返回对应药品列表
+        /// 根据过期状态返回对应药品列表
         /// </summary>
         /// <param name="status">1：已过期 2：即将过期（过期时间<=60) 3:其他药品</param>
         /// <param name="ownerId">上传者userId</param>
+        /// <param name="page">查询第几页（默认每页有8个数据）</param>
         /// <returns></returns>
-        public static List<Models.Drugs> getDrugsList(string status,string ownerId)
+        public static List<Models.Drugs> getDrugsList(string status,string ownerId,int page)
         {
             var list_drugs = new List<Models.Drugs>();
             using (DataContext dc = new DataContext(common.conn))
@@ -48,7 +50,16 @@ namespace Dap
             }
             if(list_drugs != null)
             {
-                return list_drugs;
+
+                IOrderedEnumerable<Drugs> query;
+
+                query = list_drugs.OrderBy(c => c.RemainDay);
+                int pageSize = 8;
+                var results = query
+                              .Skip(pageSize * (page-1))
+                              .Take(pageSize)
+                              .ToList();
+                return results;
             }
             else throw (new Exception("没有找过对应药品"));
 

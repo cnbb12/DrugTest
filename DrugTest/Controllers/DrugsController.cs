@@ -12,7 +12,7 @@ namespace DrugTest.Controllers
     public class DrugsController : ApiController
     {
         /// <summary>
-        /// 根据查询的过期状态返回对应的药品列表
+        /// 根据过期状态（已过期、即将过期、安全）返回对应的药品列表（分页）
         /// </summary>
         /// <returns></returns>
         
@@ -25,10 +25,12 @@ namespace DrugTest.Controllers
             {
                 string status;
                 string ownerId;
+                string  page;
 
                 status = HttpContext.Current.Request.Form["status"];
                 ownerId = HttpContext.Current.Request.Form["ownerId"];
-                result.result = Dap.drugs.getDrugsList(status,ownerId);               
+                page = HttpContext.Current.Request.Form["page"];
+                result.result = Dap.drugs.getDrugsList(status,ownerId,int.Parse(page));               
                 
             }
             catch (Exception e)
