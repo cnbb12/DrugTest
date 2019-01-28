@@ -18,5 +18,8 @@ namespace Models
 
         [Column]
         public string Password { get; set; }
+
+        [Column]
+        public int xUtils_id { get; set; }
     }
 }
