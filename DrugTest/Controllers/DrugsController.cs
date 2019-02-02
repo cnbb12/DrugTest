@@ -30,7 +30,15 @@ namespace DrugTest.Controllers
                 status = HttpContext.Current.Request.Form["status"];
                 ownerId = HttpContext.Current.Request.Form["ownerId"];
                 page = HttpContext.Current.Request.Form["page"];
-                result.result = Dap.drugs.getDrugsList(status,ownerId,int.Parse(page));               
+                if (null != status)
+                {
+                    result.result = Dap.drugs.getDrugsList(status, ownerId, int.Parse(page));
+                }
+                else
+                {
+                    result.result = Dap.drugs.getDrugsList(ownerId, int.Parse(page));
+
+                }
                 
             }
             catch (Exception e)

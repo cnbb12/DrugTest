@@ -65,5 +65,33 @@ namespace Dap
             else throw (new Exception("没有找过对应药品"));
 
         }
+        public static List<Models.Drugs> getDrugsList(string ownerId, int page)
+        {
+            var list_drugs = new List<Models.Drugs>();
+            using (DataContext dc = new DataContext(common.conn))
+            {
+
+                var _list_drugs = from x in dc.GetTable<Drugs>()
+                                  where x.OwnerId.ToString() == ownerId
+                                  select x;
+                list_drugs = _list_drugs.ToList();
+            }
+            if (list_drugs != null)
+            {
+
+                IOrderedEnumerable<Drugs> query;
+
+                query = list_drugs.OrderBy(c => c.RemainDay);
+                int pageSize = 8;
+                var results = query
+                              .Skip(pageSize * (page - 1))
+                              .Take(pageSize)
+                              .ToList();
+                return results;
+            }
+            else throw (new Exception("没有找过对应药品"));
+
+        }
     }
+
 }
