@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 
@@ -47,6 +48,71 @@ namespace DrugTest.Controllers
                 result.msg = e.Message;
             }
             return result;
+        }
+        /// <summary>
+        /// 根据关键字推荐药品
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public RESULT DrugSuggestion()
+        {
+            RESULT result = new RESULT();
+            try
+            {
+                string key,id;
+
+                key = HttpContext.Current.Request.Form["key"];
+                id = HttpContext.Current.Request.Form["id"];
+                if (null != key)
+                {
+                    result.result = Dap.drugs.drugSuggestion(key,id);
+                }
+                else
+                {
+                    throw new Exception("请输入关键字");
+                }
+
+            }
+            catch (Exception e)
+            {
+                result.state = false;
+                result.msg = e.Message;
+            }
+            return result;
+
+        }
+        /// <summary>
+        /// 查找药品
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public RESULT SearchDrug()
+        {
+            RESULT result = new RESULT();
+            try
+            {
+                string name,id;
+
+                name = HttpContext.Current.Request. Form["name"];
+                id = HttpContext.Current.Request.Form["id"];
+                if (null != name)
+                {
+                    result.result = Dap.drugs.searchDrug(name,id);
+                }
+                else
+                {
+                    throw new Exception("请输入关键字");
+                }
+
+            }
+            catch (Exception e)
+            {
+                result.state = false;
+                result.msg = e.Message;
+            }
+            return result;
+
         }
     }
 }

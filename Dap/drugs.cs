@@ -65,6 +65,12 @@ namespace Dap
             else throw (new Exception("没有找过对应药品"));
 
         }
+        /// <summary>
+        /// 返回所有药品
+        /// </summary>
+        /// <param name="ownerId"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public static List<Models.Drugs> getDrugsList(string ownerId, int page)
         {
             var list_drugs = new List<Models.Drugs>();
@@ -85,6 +91,54 @@ namespace Dap
                 int pageSize = 8;
                 var results = query
                               .Skip(pageSize * (page - 1))
+                              .Take(pageSize)
+                              .ToList();
+                return results;
+            }
+            else throw (new Exception("没有找过对应药品"));
+
+        }
+        /// <summary>
+        /// 根据关键字推荐药品
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static List<string> drugSuggestion(string key,string id)
+        {
+            var list_drugs_name = new List<string>();
+            using (DataContext dc = new DataContext(common.conn))
+            {
+
+                var _list_drugs_name = from x in dc.GetTable<Drugs>()
+                                  where x.Name.Contains(key) && x.OwnerId.ToString() == id
+                                  select x.Name;
+                list_drugs_name = _list_drugs_name.ToList();
+            }
+            if (list_drugs_name != null)
+            {
+                return list_drugs_name;
+            }
+            else throw (new Exception("没有找过对应药品"));
+
+        }
+        public static List<Models.Drugs> searchDrug(string name,string id)
+        {
+            var list_drugs = new List<Models.Drugs>();
+            using (DataContext dc = new DataContext(common.conn))
+            {
+
+                var _list_drugs = from x in dc.GetTable<Drugs>()
+                                       where x.Name.Contains(name) && x.OwnerId.ToString() == id
+                                       select x;
+                list_drugs = _list_drugs.ToList();
+            }
+            if (list_drugs != null)
+            {
+                IOrderedEnumerable<Drugs> query;
+
+                query = list_drugs.OrderBy(c => c.RemainDay);
+                int pageSize = 8;
+                var results = query
                               .Take(pageSize)
                               .ToList();
                 return results;
