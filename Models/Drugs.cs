@@ -23,7 +23,7 @@ namespace Models
         public string ExpirationDate { get; set; }
 
         [Column]
-        public string Instruction { get; set; }
+        public string Remark { get; set; }
 
         [Column]
         public Guid OwnerId { get; set; }

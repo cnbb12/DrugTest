@@ -185,7 +185,7 @@ namespace Dap
         /// <param name="phoneNumber"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static Guid addDrug(string name, string effect, string data,string instruction,string ownerId)
+        public static Guid addDrug(string name, string effect, string data,string remark,string ownerId)
         {
             if (null == effect|| null == name|| null == data || null == ownerId)
             {
@@ -200,9 +200,9 @@ namespace Dap
                     drug.Name = name;
                     drug.Effect = effect;
                     drug.ExpirationDate = data;
-                    if (null != instruction)
+                    if (null != remark)
                     {
-                        drug.Instruction = instruction;
+                        drug.Remark = remark;
                         
                     }
                     drug.OwnerId = new Guid(ownerId);

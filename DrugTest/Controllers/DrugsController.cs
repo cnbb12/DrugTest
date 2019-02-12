@@ -149,14 +149,14 @@ namespace DrugTest.Controllers
             RESULT result = new RESULT();
             try
             {
-                string name, effect, data, instruction, ownerId;
+                string name, effect, data, remark, ownerId;
 
                 name = HttpContext.Current.Request.Form["name"];
                 ownerId = HttpContext.Current.Request.Form["ownerId"];
                 effect = HttpContext.Current.Request.Form["effect"];
                 data = HttpContext.Current.Request.Form["data"];
-                instruction = HttpContext.Current.Request.Form["instruction"];
-                result.result = Dap.drugs.addDrug(name, effect,data,instruction,ownerId);
+                remark = HttpContext.Current.Request.Form["instruction"];
+                result.result = Dap.drugs.addDrug(name, effect,data,remark,ownerId);
             }
             catch (Exception e)
             {
