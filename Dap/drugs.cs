@@ -121,6 +121,12 @@ namespace Dap
             else throw (new Exception("没有找过对应药品"));
 
         }
+        /// <summary>
+        /// 搜索药品
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static List<Models.Drugs> searchDrug(string name,string id)
         {
             var list_drugs = new List<Models.Drugs>();
@@ -145,6 +151,72 @@ namespace Dap
             }
             else throw (new Exception("没有找过对应药品"));
 
+        }
+
+        /// <summary>
+        /// 删除药品
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static void deleteDrug(string ownerId, string id)
+        {
+            if (null == ownerId || null == id) {
+                throw (new Exception("参数缺失"));
+            }
+            else {
+                using (DataContext dc = new DataContext(common.conn))
+                {
+                    var tb = dc.GetTable<Models.Drugs>();
+                    var _drug = (from x in tb
+                                 where x.ID.Equals(id) && x.OwnerId.ToString().Equals(ownerId)
+                                 select x).First();
+                    tb.DeleteOnSubmit(_drug);
+                    dc.SubmitChanges();
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 添加药品
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="phoneNumber"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static Guid addDrug(string name, string effect, string data,string instruction,string ownerId)
+        {
+            if (null == effect|| null == name|| null == data || null == ownerId)
+            {
+                throw (new Exception("请将药品信息填写完整"));
+            }
+            else
+            {
+                using (DataContext dc = new DataContext(Dap.common.conn))
+                {
+                    var tb = dc.GetTable<Models.Drugs>();
+                    Models.Drugs drug = new Models.Drugs();
+                    drug.Name = name;
+                    drug.Effect = effect;
+                    drug.ExpirationDate = data;
+                    if (null != instruction)
+                    {
+                        drug.Instruction = instruction;
+                        
+                    }
+                    drug.OwnerId = new Guid(ownerId);
+                    drug.ID = System.Guid.NewGuid();
+                    DateTime t = DateTime.Now;
+                    DateTime t1 = Convert.ToDateTime(data);
+                    TimeSpan ts = t1 - t;
+                    int d = ts.Days;
+                    drug.RemainDay = d;
+                    tb.InsertOnSubmit(drug);
+                    dc.SubmitChanges();//后台自动生成用户ID
+                    return drug.ID;
+                }
+            }
         }
     }
 

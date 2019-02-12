@@ -114,5 +114,57 @@ namespace DrugTest.Controllers
             return result;
 
         }
+
+        /// <summary>
+        /// 删除药品
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public RESULT DeleteDrug()
+        {
+            RESULT result = new RESULT();
+            try
+            {
+                string ownerId, id;
+
+                id = HttpContext.Current.Request.Form["id"];
+                ownerId = HttpContext.Current.Request.Form["ownerId"];
+                Dap.drugs.deleteDrug(ownerId, id);
+            }
+            catch (Exception e)
+            {
+                result.state = false;
+                result.msg = e.Message;
+            }
+            return result;
+
+        }
+        /// <summary>
+        /// 添加药品
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public RESULT AddDrug()
+        {
+            RESULT result = new RESULT();
+            try
+            {
+                string name, effect, data, instruction, ownerId;
+
+                name = HttpContext.Current.Request.Form["name"];
+                ownerId = HttpContext.Current.Request.Form["ownerId"];
+                effect = HttpContext.Current.Request.Form["effect"];
+                data = HttpContext.Current.Request.Form["data"];
+                instruction = HttpContext.Current.Request.Form["instruction"];
+                result.result = Dap.drugs.addDrug(name, effect,data,instruction,ownerId);
+            }
+            catch (Exception e)
+            {
+                result.state = false;
+                result.msg = e.Message;
+            }
+            return result;
+
+        }
     }
 }
