@@ -129,7 +129,7 @@ namespace DrugTest.Controllers
 
                 id = HttpContext.Current.Request.Form["id"];
                 ownerId = HttpContext.Current.Request.Form["ownerId"];
-                Dap.drugs.deleteDrug(ownerId, id);
+                result.result = Dap.drugs.deleteDrug(ownerId, id);
             }
             catch (Exception e)
             {

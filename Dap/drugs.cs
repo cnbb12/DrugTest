@@ -159,7 +159,7 @@ namespace Dap
         /// <param name="name"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static void deleteDrug(string ownerId, string id)
+        public static List<Models.Drugs> deleteDrug(string ownerId, string id)
         {
             if (null == ownerId || null == id) {
                 throw (new Exception("参数缺失"));
@@ -173,6 +173,9 @@ namespace Dap
                                  select x).First();
                     tb.DeleteOnSubmit(_drug);
                     dc.SubmitChanges();
+                    List<Models.Drugs> list_drug = new List<Drugs>();
+                    list_drug.Add(_drug);
+                    return list_drug;
                 }
             }
         }
@@ -185,7 +188,7 @@ namespace Dap
         /// <param name="phoneNumber"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static Guid addDrug(string name, string effect, string data,string remark,string ownerId)
+        public static List<Models.Drugs> addDrug(string name, string effect, string data,string remark,string ownerId)
         {
             if (null == effect|| null == name|| null == data || null == ownerId)
             {
@@ -214,7 +217,9 @@ namespace Dap
                     drug.RemainDay = d;
                     tb.InsertOnSubmit(drug);
                     dc.SubmitChanges();//后台自动生成用户ID
-                    return drug.ID;
+                    List<Models.Drugs> list_drug = new List<Drugs>();
+                    list_drug.Add(drug);
+                    return list_drug;
                 }
             }
         }
