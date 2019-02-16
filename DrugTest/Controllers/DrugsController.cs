@@ -92,13 +92,14 @@ namespace DrugTest.Controllers
             RESULT result = new RESULT();
             try
             {
-                string name,id;
+                string name,ownerId,page;
 
                 name = HttpContext.Current.Request. Form["name"];
-                id = HttpContext.Current.Request.Form["id"];
+                ownerId = HttpContext.Current.Request.Form["ownerId"];
+                page = HttpContext.Current.Request.Form["page"];
                 if (null != name)
                 {
-                    result.result = Dap.drugs.searchDrug(name,id);
+                    result.result = Dap.drugs.searchDrug(name,ownerId,int.Parse(page));
                 }
                 else
                 {
@@ -166,5 +167,36 @@ namespace DrugTest.Controllers
             return result;
 
         }
+
+        /// <summary>
+        /// 药品信息更新
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public RESULT UpdateDrug()
+        {
+            RESULT result = new RESULT();
+            try
+            {
+                string id,name, effect, data, remark, ownerId;
+
+                id = HttpContext.Current.Request.Form["id"];
+                name = HttpContext.Current.Request.Form["name"];
+                ownerId = HttpContext.Current.Request.Form["ownerId"];
+                effect = HttpContext.Current.Request.Form["effect"];
+                data = HttpContext.Current.Request.Form["data"];
+                remark = HttpContext.Current.Request.Form["instruction"];
+                result.result = Dap.drugs.updateDrug(id,ownerId,name, effect, data, remark);
+            }
+            catch (Exception e)
+            {
+                result.state = false;
+                result.msg = e.Message;
+            }
+            return result;
+
+        }
+
+
     }
 }

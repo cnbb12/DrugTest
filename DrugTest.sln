@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dap", "Dap\Dap.csproj", "{3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{257DB60E-6938-44D3-874E-6C990904C9D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cn.jpush.api", "cn.jpush.api\cn.jpush.api.csproj", "{AD5AE9EA-6545-45FC-83AB-22F2227C59FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{972F82A9-7EBB-488A-8BFD-1CD7C8C7168A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{257DB60E-6938-44D3-874E-6C990904C9D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{257DB60E-6938-44D3-874E-6C990904C9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{257DB60E-6938-44D3-874E-6C990904C9D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5AE9EA-6545-45FC-83AB-22F2227C59FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5AE9EA-6545-45FC-83AB-22F2227C59FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5AE9EA-6545-45FC-83AB-22F2227C59FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5AE9EA-6545-45FC-83AB-22F2227C59FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{972F82A9-7EBB-488A-8BFD-1CD7C8C7168A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{972F82A9-7EBB-488A-8BFD-1CD7C8C7168A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{972F82A9-7EBB-488A-8BFD-1CD7C8C7168A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{972F82A9-7EBB-488A-8BFD-1CD7C8C7168A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

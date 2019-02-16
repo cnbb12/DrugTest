@@ -127,15 +127,15 @@ namespace Dap
         /// <param name="name"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static List<Models.Drugs> searchDrug(string name,string id)
+        public static List<Models.Drugs> searchDrug(string name,string ownerId,int page)
         {
             var list_drugs = new List<Models.Drugs>();
             using (DataContext dc = new DataContext(common.conn))
             {
 
                 var _list_drugs = from x in dc.GetTable<Drugs>()
-                                       where x.Name.Contains(name) && x.OwnerId.ToString() == id
-                                       select x;
+                                       where x.Name.Contains(name) && x.OwnerId.ToString() == ownerId
+                                  select x;
                 list_drugs = _list_drugs.ToList();
             }
             if (list_drugs != null)
@@ -145,8 +145,9 @@ namespace Dap
                 query = list_drugs.OrderBy(c => c.RemainDay);
                 int pageSize = 8;
                 var results = query
-                              .Take(pageSize)
-                              .ToList();
+                    .Skip(pageSize * (page - 1))
+                    .Take(pageSize)
+                    .ToList();
                 return results;
             }
             else throw (new Exception("没有找过对应药品"));
@@ -223,6 +224,37 @@ namespace Dap
                 }
             }
         }
+        /// <summary>
+        /// 修改药品信息
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static List<Models.Drugs> updateDrug(string id, string ownerId, string name, string effect, string data, string remark)
+        {
+            var list_drugs = new List<Models.Drugs>();
+            using (DataContext dc = new DataContext(common.conn))
+            {
+                var tb = dc.GetTable<Models.Drugs>();
+                var _drug = (from x in tb
+                             where x.ID.Equals(id) && x.OwnerId.ToString().Equals(ownerId)
+                             select x).First();
+                _drug.Name = name;
+                _drug.Effect = effect;
+                _drug.ExpirationDate = data;
+                DateTime t = DateTime.Now;
+                DateTime t1 = Convert.ToDateTime(data);
+                TimeSpan ts = t1 - t;
+                _drug.RemainDay = ts.Days;
+                dc.SubmitChanges();
+                List<Models.Drugs> list_drug = new List<Drugs>();
+                list_drug.Add(_drug);
+                return list_drug;
+            }
+
+        }
+
+      
     }
 
 }
