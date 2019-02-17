@@ -16,8 +16,6 @@ namespace Dap
         /// 根据过期状态返回对应药品列表
         /// </summary>
         /// <param name="status">1：已过期 2：即将过期（过期时间<=60) 3:其他药品</param>
-        /// <param name="ownerId">上传者userId</param>
-        /// <param name="page">查询第几页（默认每页有8个数据）</param>
         /// <returns></returns>
         public static List<Models.Drugs> getDrugsList(string status)
         {
@@ -35,7 +33,7 @@ namespace Dap
                 else if ("2".Equals(status))//即将过期（标准为过期前两个月）
                 {
                     var _list_drugs = from x in dc.GetTable<Drugs>()
-                                     where x.RemainDay == 60
+                                     where x.RemainDay == 30
                                      select x;
                     list_drugs = _list_drugs.ToList();
                     

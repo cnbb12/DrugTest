@@ -3,35 +3,39 @@ using cn.jpush.api.push.mode;
 using cn.jpush.api.push.notification;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using System.Web;
 
-namespace ConsoleApp1
+namespace DrugTest
 {
-    class Program
+    public class Jpush
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// 固定时间间隔进行推送
+        /// </summary>
+        public static void startTimer()
         {
-           
-            Timer timer = new Timer();
+            sendPush();
+            //设置定时间隔(毫秒为单位)
+            int interval = 24 * 60 * 60 * 1000;
+            Timer timer = new System.Timers.Timer(interval);
+            //设置执行一次（false）还是一直执行(true)
+            timer.AutoReset = true;
+            //设置是否执行System.Timers.Timer.Elapsed事件
             timer.Enabled = true;
-            timer.Interval = 24*60*60*1000; //执行间隔时间为一天
-            timer.Start();
-            timer.Elapsed += new ElapsedEventHandler(TimedEvent);
-            Console.ReadKey();
+            //绑定Elapsed事件
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(TimerUp);
 
         }
 
-        private static void TimedEvent(object source, ElapsedEventArgs e)
+        private static void TimerUp(object sender, System.Timers.ElapsedEventArgs e)
         {
             sendPush();
-
         }
         public static void sendPush()
         {
+
             string AppKey = "6d39f5bdddfe1143a3d55895";
             string MasterSecret = "74758e5fd26d7bb2faa74488";
             JPushClient client = new JPushClient(AppKey, MasterSecret);//根据app信息生成推送client
@@ -78,4 +82,3 @@ namespace ConsoleApp1
         }
     }
 }
- 
