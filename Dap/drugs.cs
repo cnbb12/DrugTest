@@ -101,14 +101,14 @@ namespace Dap
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static List<string> drugSuggestion(string key,string id)
+        public static List<string> drugSuggestion(string key,string ownerId)
         {
             var list_drugs_name = new List<string>();
             using (DataContext dc = new DataContext(common.conn))
             {
 
                 var _list_drugs_name = from x in dc.GetTable<Drugs>()
-                                  where x.Name.Contains(key) && x.OwnerId.ToString() == id
+                                  where x.Name.Contains(key) && x.OwnerId.ToString() == ownerId
                                   select x.Name;
                 list_drugs_name = _list_drugs_name.ToList();
             }
@@ -125,15 +125,15 @@ namespace Dap
         /// <param name="name"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static List<Models.Drugs> searchDrug(string name,string id)
+        public static List<Models.Drugs> searchDrug(string name,string ownerId)
         {
             var list_drugs = new List<Models.Drugs>();
             using (DataContext dc = new DataContext(common.conn))
             {
 
                 var _list_drugs = from x in dc.GetTable<Drugs>()
-                                       where x.Name.Contains(name) && x.OwnerId.ToString() == id
-                                       select x;
+                                       where x.Name.Contains(name) && x.OwnerId.ToString() == ownerId
+                                  select x;
                 list_drugs = _list_drugs.ToList();
             }
             if (list_drugs != null)

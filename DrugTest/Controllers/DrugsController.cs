@@ -60,13 +60,13 @@ namespace DrugTest.Controllers
             RESULT result = new RESULT();
             try
             {
-                string key,id;
+                string key, ownerId;
 
                 key = HttpContext.Current.Request.Form["key"];
-                id = HttpContext.Current.Request.Form["id"];
+                ownerId = HttpContext.Current.Request.Form["ownerId"];
                 if (null != key)
                 {
-                    result.result = Dap.drugs.drugSuggestion(key,id);
+                    result.result = Dap.drugs.drugSuggestion(key, ownerId);
                 }
                 else
                 {
@@ -92,13 +92,13 @@ namespace DrugTest.Controllers
             RESULT result = new RESULT();
             try
             {
-                string name,id;
+                string name, ownerId;
 
                 name = HttpContext.Current.Request. Form["name"];
-                id = HttpContext.Current.Request.Form["id"];
+                ownerId = HttpContext.Current.Request.Form["ownerId"];
                 if (null != name)
                 {
-                    result.result = Dap.drugs.searchDrug(name,id);
+                    result.result = Dap.drugs.searchDrug(name, ownerId);
                 }
                 else
                 {
