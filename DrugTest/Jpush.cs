@@ -42,8 +42,14 @@ namespace DrugTest
             List<PushPayload> pushPayLoads = JPushObjecWithExtrasAndMessage();//设置推送的具体参数
             foreach (PushPayload pushPayLoad in pushPayLoads)
             {
-                var reslut = client.SendPush(pushPayLoad);//推送
-                var apiReslut = client.getReceivedApi(reslut.msg_id.ToString());//接收推送结果
+                try
+                {
+                    var reslut = client.SendPush(pushPayLoad);//推送
+                    var apiReslut = client.getReceivedApi(reslut.msg_id.ToString());//接收推送结果
+                }catch(Exception e)
+                {
+
+                }
             }
 
 

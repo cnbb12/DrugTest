@@ -26,6 +26,32 @@ namespace DrugTest.Controllers
                 string key = HttpContext.Current.Request.Form["key"];
 
                 result.result = Dap.user.checkLogin(phoneNumber, key);
+               
+            }
+            catch (Exception e)
+            {
+                result.state = false;
+                result.msg = e.Message;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 注册用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public RESULT Register()
+        {
+
+            RESULT result = new RESULT();
+            try
+            {
+                string phoneNumber = HttpContext.Current.Request.Form["phoneNumber"];
+                string key = HttpContext.Current.Request.Form["key"];
+
+                result.result = Dap.user.registerUser(phoneNumber, key);
+
             }
             catch (Exception e)
             {

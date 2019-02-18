@@ -32,9 +32,52 @@ namespace Dap
                     if (user.Count() >= 1)
                     {
                         return user.ToList();
+                        
                     }
                     else throw (new Exception("用户名或密码错误"));
                 }
+            }
+        }
+
+        /// <summary>
+        /// 注册新用户
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static List<Models.User> registerUser(string phoneNumber, string key)
+        {
+            using (DataContext dc = new DataContext(common.conn))
+            {
+                int phoneNumbers = (from x in dc.GetTable<User>()
+                                   where x.PhoneNumber == phoneNumber
+                                   select x).Count();
+                if(phoneNumbers != 0)
+                {
+                    throw new Exception("该手机号已被注册");
+                }
+                else
+                {
+                    int count = (from x in dc.GetTable<User>()
+                                       select x).Count();
+
+                    
+                    User user = new User();
+                    user.PhoneNumber = phoneNumber;
+                    user.Password = key;
+                    user.ID = Guid.NewGuid();
+                    user.xUtils_id = count + 1;
+
+                    var tb = dc.GetTable<User>();
+                    tb.InsertOnSubmit(user);
+                    dc.SubmitChanges();//后台自动生成用户ID
+                    List<Models.User> list_user= new List<User>();
+                    list_user.Add(user);
+                    return list_user;
+                }
+                    
+               
+                
             }
         }
     }

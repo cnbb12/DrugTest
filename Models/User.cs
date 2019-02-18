@@ -10,7 +10,7 @@ namespace Models
     [Table(Name = "User")]
     public class User
     {
-        [Column]
+        [Column(IsPrimaryKey = true)]
         public Guid ID { get; set; }
 
         [Column]
