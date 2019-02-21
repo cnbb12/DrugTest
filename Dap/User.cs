@@ -80,5 +80,38 @@ namespace Dap
                 
             }
         }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="key"></param>
+        /// <param name="newKey"></param>
+        /// <returns></returns>
+        public static List<Models.User> changePsd(string id, string key, string newKey)
+        {
+            if (null == id || null == key || null == newKey)
+            {
+                throw (new Exception("请将信息填写完整"));
+            }
+            else
+            {
+                using (DataContext dc = new DataContext(Dap.common.conn))
+                {
+                    var _user = (from x in dc.GetTable<User>()
+                                 where x.ID.ToString() == id && x.Password.ToString() == key
+                                 select x).First();
+                    Models.User user = _user;
+
+                    user.Password = newKey;
+                   
+                    dc.SubmitChanges();//后台自动生成用户ID
+                    List<Models.User> list_user = new List<User>();
+                    list_user.Add(user);
+                    return list_user;
+                }
+            }
+
+        }
     }
 }

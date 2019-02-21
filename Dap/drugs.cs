@@ -178,6 +178,53 @@ namespace Dap
             }
         }
 
+        /// <summary>
+        /// 更新药品信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="effect"></param>
+        /// <param name="data"></param>
+        /// <param name="remark"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public static dynamic updateDrug(string id, string name, string effect, string data, string remark, string ownerId)
+        {
+            if (null == effect || null == name || null == data || null == ownerId)
+            {
+                throw (new Exception("请将药品信息填写完整"));
+            }
+            else
+            {
+                using (DataContext dc = new DataContext(Dap.common.conn))
+                {
+                    var _drug = (from x in dc.GetTable<Drugs>()
+                                      where x.ID.ToString() == id
+                                      select x).First();
+                    Models.Drugs drug = _drug;
+
+         
+                    drug.Name = name;
+                    drug.Effect = effect;
+                    drug.ExpirationDate = data;
+                    if (null != remark)
+                    {
+                        drug.Remark = remark;
+
+                    }
+                    DateTime t = DateTime.Now;
+                    DateTime t1 = Convert.ToDateTime(data);
+                    TimeSpan ts = t1 - t;
+                    int d = ts.Days;
+                    drug.RemainDay = d;
+                    dc.SubmitChanges();//后台自动生成用户ID
+                    List<Models.Drugs> list_drug = new List<Drugs>();
+                    list_drug.Add(drug);
+                    return list_drug;
+                }
+            }
+        }
+
 
         /// <summary>
         /// 添加药品
@@ -220,6 +267,27 @@ namespace Dap
                     return list_drug;
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 获取药品RemainDay
+        /// </summary>
+        /// <returns></returns>
+        public static void upDateRemainDay()
+        {
+            using (DataContext dc = new DataContext(Dap.common.conn))
+            {
+
+                var _drugs = from x in dc.GetTable<Drugs>()
+                            select x;
+                List<Drugs> list_drug = _drugs.ToList();
+                foreach(Drugs drug in list_drug)
+                {
+                    drug.RemainDay = drug.RemainDay - 1;
+                }
+            }
+            
         }
     }
 

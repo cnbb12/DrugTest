@@ -149,14 +149,44 @@ namespace DrugTest.Controllers
             RESULT result = new RESULT();
             try
             {
-                string name, effect, data, remark, ownerId;
+                string id,name, effect, data, remark, ownerId;
 
+      
                 name = HttpContext.Current.Request.Form["name"];
                 ownerId = HttpContext.Current.Request.Form["ownerId"];
                 effect = HttpContext.Current.Request.Form["effect"];
                 data = HttpContext.Current.Request.Form["data"];
                 remark = HttpContext.Current.Request.Form["instruction"];
                 result.result = Dap.drugs.addDrug(name, effect,data,remark,ownerId);
+            }
+            catch (Exception e)
+            {
+                result.state = false;
+                result.msg = e.Message;
+            }
+            return result;
+
+        }
+
+        /// <summary>
+        /// 修改药品信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public RESULT UpdateDrug()
+        {
+            RESULT result = new RESULT();
+            try
+            {
+                string id, name, effect, data, remark, ownerId;
+
+                id = HttpContext.Current.Request.Form["id"];
+                name = HttpContext.Current.Request.Form["name"];
+                ownerId = HttpContext.Current.Request.Form["ownerId"];
+                effect = HttpContext.Current.Request.Form["effect"];
+                data = HttpContext.Current.Request.Form["data"];
+                remark = HttpContext.Current.Request.Form["instruction"];
+                result.result = Dap.drugs.updateDrug(id,name, effect, data, remark, ownerId);
             }
             catch (Exception e)
             {

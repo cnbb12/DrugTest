@@ -60,5 +60,31 @@ namespace DrugTest.Controllers
             }
             return result;
         }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public RESULT ChangePsd()
+        {
+
+            RESULT result = new RESULT();
+            try
+            {
+                string id = HttpContext.Current.Request.Form["id"];
+                string key = HttpContext.Current.Request.Form["key"];
+                string newKey = HttpContext.Current.Request.Form["newKey"];
+
+                result.result = Dap.user.changePsd(id, key,newKey);
+
+            }
+            catch (Exception e)
+            {
+                result.state = false;
+                result.msg = e.Message;
+            }
+            return result;
+        }
     }
 }

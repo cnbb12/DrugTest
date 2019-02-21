@@ -18,8 +18,7 @@ namespace DrugTest
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver { IgnoreSerializableAttribute = true };
             Jpush.startTimer();
-
-
+            UpdateRemainDay.startTimer();
         }
     }
 }
