@@ -132,7 +132,7 @@ namespace Dap
             {
 
                 var _list_drugs = from x in dc.GetTable<Drugs>()
-                                       where x.Name.Contains(name) && x.OwnerId.ToString() == ownerId
+                                       where (x.Name.Contains(name) || x.Effect.Contains(name)) && x.OwnerId.ToString() == ownerId
                                   select x;
                 list_drugs = _list_drugs.ToList();
             }
@@ -282,10 +282,18 @@ namespace Dap
                 var _drugs = from x in dc.GetTable<Drugs>()
                             select x;
                 List<Drugs> list_drug = _drugs.ToList();
-                foreach(Drugs drug in list_drug)
+                DateTime t = DateTime.Now;
+                
+                foreach (Drugs drug in list_drug)
                 {
-                    drug.RemainDay = drug.RemainDay - 1;
+                    DateTime t1 = Convert.ToDateTime(drug.ExpirationDate);
+                    TimeSpan ts = t1 - t;
+                    int d = ts.Days;
+                    drug.RemainDay = d;
+                    
                 }
+                dc.SubmitChanges();
+
             }
             
         }
