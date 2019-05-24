@@ -10,7 +10,7 @@ namespace DrugTest
     {
         public static void startTimer()
         {
-            
+            Dap.drugs.upDateRemainDay();
             //设置定时间隔(毫秒为单位)
             int interval = 24 * 60 * 60 * 1000;
             Timer timer = new System.Timers.Timer(interval);
